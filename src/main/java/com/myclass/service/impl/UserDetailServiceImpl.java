@@ -18,7 +18,7 @@ import com.myclass.entity.User;
 import com.myclass.repository.UserRepository;
 
 @Service
-@Transactional
+@Transactional(rollbackOn = Exception.class)
 public class UserDetailServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -26,19 +26,20 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
 		User user = userRepository.findByEmail(email);
-		if (user == null) {
-			throw new UsernameNotFoundException("Email not found!");
-		}
-		
+		if (user == null) throw new UsernameNotFoundException("Không tìm thấy tài khoảng!");
 
+		String roleName = user.getRole().getDescription();
+		
+		// create list role user
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		String roleName = user.getRole().getName();
-		authorities.add(new SimpleGrantedAuthority(roleName));		
-		UserDetailDto dto = new UserDetailDto(user.getEmail(), user.getPassword(), authorities);
-				
-		return dto;
+		authorities.add(new SimpleGrantedAuthority(roleName));
+		UserDetailDto userDetaildto = new UserDetailDto(user.getEmail(), user.getPassword(), authorities);
+		
+		userDetaildto.setFullname(user.getFullname());
+		userDetaildto.setAvatar(user.getAvatar());
+		
+		return userDetaildto;
 	}
 
 }

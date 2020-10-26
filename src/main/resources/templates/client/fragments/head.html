@@ -1,0 +1,43 @@
+<header class="container-fluid border-bottom">
+       <nav class="navbar navbar-expand-sm navbar-light bg-light">
+           <a class="navbar-brand" href="/home">Elearning</a>
+           <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
+                   data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                   aria-label="Toggle navigation"></button>
+           <div class="collapse navbar-collapse row" id="collapsibleNavId">
+               <div class="col-md-6">
+                   <ul class="navbar-nav mr-auto mt-2 mt-lg-0 d-flex align-items-center justify-content-between">
+                       <li class="nav-item mr-3">
+                           <div class="dropdown">
+                               <a class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                   <i class="fa fa-th"></i>
+                                   <span class="ml-2">Categories</span>
+                               </a>
+                               <div class="dropdown-menu" >
+                                   <a class="dropdown-item" th:each="category :${categoryDto}" th:href="@{${(T(com.myclass.util.UrlConstants.Client).COURSE_LIST)}(id=${category.id})}">
+                                       <i th:class="${category.icon}"></i>	
+                                       <span th:text="${category.title}"></span>
+                                   </a>
+                               </div>
+                           </div>
+                       </li>
+                       <li class="nav-item w-100">
+                           <form class="input-group nav-search" id="search-course" th:action="@{${(T(com.myclass.util.UrlConstants.Client).COURSE_SEARCH)}}" method="get">
+                               <input type="text" id="title-course" class="form-control" placeholder="Search courses">
+                               <div class="input-group-append">
+                                   <button type="submit" class="btn bg-white text-danger" onsearch="SearchCourse()" id="btn-search"><i class="fa fa-search"></i></button>
+                               </div>
+                           </form>
+                       </li>
+                   </ul>
+               </div>
+               <div class="col-md-1 nav-cart">
+                   <i class="fa fa-shopping-basket"></i>
+               </div>
+               <div class="col-md-5 text-right">
+                   <a th:href="@{${T(com.myclass.util.UrlConstants.Client).ACCOUNT_LOGIN}}" class="btn btn-outline-secondary">Login</a>
+                   <a th:href="@{${T(com.myclass.util.UrlConstants.Client).ACCOUNT_REGISTER}}" class="btn btn-danger">Sign up</a>
+               </div>
+           </div>
+       </nav>
+    </header>

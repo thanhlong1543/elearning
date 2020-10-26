@@ -1,35 +1,32 @@
 package com.myclass.dto;
 
 public class LoginDto {
-	private String username;
-	private String password;
+	private String email;
+	private String pasword;
+	
+	public LoginDto() {}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public LoginDto(String username, String password) {
+	public LoginDto(String email, String pasword) {
 		super();
-		this.username = username;
-		this.password = password;
+		this.email = email;
+		this.pasword = pasword;
 	}
 
-	public LoginDto() {
-		super();
+	public String getEmail() {
+		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasword() {
+		return pasword;
+	}
+
+	public void setPasword(String pasword) {
+		this.pasword = pasword;
+	}
 	
 	
 }

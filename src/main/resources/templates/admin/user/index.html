@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="/admin/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Danh sách tài khoản</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="col-md-12 mb-2">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item"><a th:href="@{${T(com.myclass.util.UrlConstants.Admin).HOME}}"><i class="feather icon-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Danh sách tài khoản</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card px-3">
+                <div class="card-header px-0 pb-2">
+                    <h2 class="text-uppercase text-center">Danh sách tài khoản</h2>
+                    <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).USER_ADD}}" class="btn btn-sm btn-primary">Thêm mới</a>
+                </div>
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">STT</th>
+                                    <th class="text-center">Họ Tên</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Số ĐT</th>
+                                    <th class="text-center">Loại Người Dùng</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user, iter : ${listUser}">
+                                    <th class="text-center" th:text="${iter.count}"></th>
+                                    <td class="text-center" th:text="${user.fullname}"></td>
+                                    <td class="text-center" th:text="${user.email}"></td>
+                                    <td class="text-center" th:text="${user.phone}"></td>
+                                    <td class="text-center" th:text="${user.roleName}"></td>
+                                    <td class="text-center">
+                                        <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).USER_EDIT}(id=${user.id})}" class="btn btn-sm btn-info btn-round py-1 font-weight-bold">Sửa</a>
+                                        <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).USER_DELETE}(id=${user.id})}" class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">Xóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

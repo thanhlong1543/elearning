@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/client/layout/default">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+    <link xmlns:th="http://www.thymeleaf.org" rel="stylesheet" th:href="@{/clientStyle/css/profile.css}">
+</head>
+<body>
+	<div layout:fragment="content">
+		<nav aria-label="breadcrumb">
+	        <div class="container-fluid">
+	            <ol class="breadcrumb bg-white mb-0 py-2">
+	                <li class="breadcrumb-item"><a href="/home"><i class="fa fa-home mr-1"></i> Home</a></li>
+	                <li class="breadcrumb-item active" aria-current="page" th:text="${categoryTitle.getTitle()}"></li>
+	            </ol>
+	        </div>
+	    </nav>
+	    <!-- BEGIN BANNER -->
+	    <section class="course-banner">
+	        <div class="container">
+	            <div class="banner-content">
+	                <h1 th:text="${categoryTitle.getTitle()}"></h1>
+	                <h5></h5>
+	            </div>
+	        </div>
+	    </section>
+	    <!-- BEGIN BANNER -->
+	    <!-- BEGIN CONTENT -->
+	    <section class="mt-5">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-md-3" th:each="course :${courseDto}">
+	                    <a th:href="@{${T(com.myclass.util.UrlConstants.Client).COURSE_DETAIL}(id=${course.getId()})}" class="my-course-item">
+	                        <img th:src="'/adminStyle/images/course/' + ${course.getImage()}" alt="">
+	                        <h6 class="my-course-title"  th:text="${course.getTitle()}"> </h6>
+	                        <div class="my-course-desc" th:text="${course.getDescription()}">
+	                        </div>
+	                        <div class="my-course-author">
+	                            <h6>
+	                                <small></small>
+	                                <small>Start course</small>
+	                            </h6>
+	                        </div>
+	                    </a>
+	                </div>
+	                
+	            </div>
+	        </div>
+	    </section>
+	</div>
+	
+</body>
+</html>

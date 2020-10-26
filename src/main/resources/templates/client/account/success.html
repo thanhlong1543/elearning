@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/client/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Đăng ký thành công</title>
+</head>
+<body>
+ <div layout:fragment="content">
+   	<section class="course-banner">
+        <div class="container">
+            <div class="banner-content">
+            	<h1>Đăng ký thành công</h1>
+            </div>
+        </div>
+    </section>
+    <section class="mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 offset-md-5 my-auto">
+                	<a class="btn btn-danger" th:href="@{${T(com.myclass.util.UrlConstants.Client).HOME_URL}}">Go Back</a>
+                </div>
+            </div>
+        </div>
+    </section>        
+          
+ </div>
+</body>
+</html>

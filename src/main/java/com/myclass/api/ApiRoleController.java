@@ -16,64 +16,59 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myclass.dto.RoleDto;
 import com.myclass.service.RoleService;
+import com.myclass.util.UrlConstants;
 
 @RestController
-@RequestMapping("api/role")
+@RequestMapping(value = UrlConstants.Admin.API_ROLE)
 public class ApiRoleController {
-
+	
 	@Autowired
 	private RoleService roleService;
-
+	
 	@GetMapping("")
 	public Object get() {
-		List<RoleDto> roles = roleService.findAll();
-		if (roles.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		List<RoleDto> roles =  roleService.findAll();
+		return new ResponseEntity<List<RoleDto>>(roles, HttpStatus.OK);
 	}
-
-	@GetMapping("{id}")
+	
+	@GetMapping("/{id}")
 	public Object get(@PathVariable("id") int id) {
 		try {
-			RoleDto role = roleService.findById(id);
-			return new ResponseEntity<>(role, HttpStatus.OK);
-
+			RoleDto roles =  roleService.findByID(id);
+			return new ResponseEntity<RoleDto>(roles, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>("Not found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("Không tìm thấy!", HttpStatus.NOT_FOUND);
 		}
+		
 	}
-
+	
 	@PostMapping("")
-	public Object add(@RequestBody RoleDto dto) {
+	public Object add(@RequestBody RoleDto roleDto) {
 		try {
-			roleService.add(dto);
-			return new ResponseEntity<String>("Success", HttpStatus.CREATED);
+			roleService.add(roleDto);
+			return new ResponseEntity<String>("Thêm thành công", HttpStatus.CREATED);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-		}
-
+			return new ResponseEntity<String>("Thêm thất bại", HttpStatus.BAD_REQUEST);
+		}	
 	}
-
+	
 	@PutMapping("")
-	public Object update(@RequestBody RoleDto dto) {
+	public Object update(@RequestBody RoleDto roleDto) {
 		try {
-			roleService.update(dto);
-			return new ResponseEntity<String>("Update Success", HttpStatus.OK);
+			roleService.update(roleDto);
+			return new ResponseEntity<String>("Sửa Thành Công", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>("Update Fail", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Sửa Thất bại", HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@DeleteMapping("/{id}")
 	public Object delete(@PathVariable("id") int id) {
 		try {
 			roleService.delete(id);
-			return new ResponseEntity<String>("Delete Success", HttpStatus.OK);
+			return new ResponseEntity<String>("Xóa Thành Công", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>("Delete Fail", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Xóa Thất bại", HttpStatus.BAD_GATEWAY);
 		}
 	}
-
 }

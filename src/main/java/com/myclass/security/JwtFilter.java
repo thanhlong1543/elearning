@@ -12,47 +12,45 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.myclass.service.impl.UserDetailServiceImpl;
 
 import io.jsonwebtoken.Jwts;
 
-public class JwtFilter extends BasicAuthenticationFilter{
+public class JwtFilter extends BasicAuthenticationFilter {
 
-
-	private UserDetailsService userDetailService;
-
-	public JwtFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
-		
-		super(authenticationManager);
-		this.userDetailService = userDetailsService;
-	}
+	private UserDetailServiceImpl userDetailService;
 	
+	public JwtFilter(AuthenticationManager authenticationManager, UserDetailServiceImpl userDetailService) {
+		super(authenticationManager);
+		this.userDetailService = userDetailService;
+	}
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
 		String tokenHeader = request.getHeader("Authorization");
-		if(tokenHeader !=null && tokenHeader.startsWith("Bearer ")) {
+		System.out.println(tokenHeader);
+		
+		if (tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
 			String token = tokenHeader.replace("Bearer ", "");
-			
-			String email = Jwts
-					.parser()
-					.setSigningKey("abcd")
+			String email = Jwts.parser()
+					.setSigningKey("KeyPass")
 					.parseClaimsJws(token)
 					.getBody()
 					.getSubject();
+			 
+			UserDetails userDetails = this.userDetailService.loadUserByUsername(email);
 			
-			UserDetails userDetail = this.userDetailService.loadUserByUsername(email);
-			
-			Authentication authentication = 
-					new UsernamePasswordAuthenticationToken(userDetail,null ,userDetail.getAuthorities());
-			
+			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
 			chain.doFilter(request, response);
-		} else {
-			response.sendError(401, "Authenticate fail");
 		}
+		else {
+			response.sendError(401, "Chưa đăng nhập");
+		}
+		
 	}
 }

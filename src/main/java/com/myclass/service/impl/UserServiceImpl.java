@@ -1,5 +1,7 @@
 package com.myclass.service.impl;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,58 +23,80 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+
+	@Override
 	public List<UserDto> findAll() {
-		List<User> users = userRepository.findAll();
-		
-		List<UserDto> dtos = new ArrayList<UserDto>();
-		for (User user : users) {
-			UserDto userDto = new UserDto();
-			userDto.setId(user.getId());
-			userDto.setFullname(user.getFullname());
-			userDto.setEmail(user.getEmail());
-			
-			String desc = user.getRole().getDescription();
-			userDto.setRoleDesc(desc);
-			
-			dtos.add(userDto);
+		List<UserDto> liserUserDto = new ArrayList<UserDto>();
+		List<User> listUser = userRepository.findAll();
+		for (User user : listUser) {		
+			liserUserDto.add(new UserDto(user.getId(), user.getEmail(), user.getFullname(), user.getAvatar(), user.getPhone(), user.getAddress(),
+					user.getRole_id(), user.getRole().getName()));
 		}
-		return dtos;
+		return liserUserDto;
 	}
 
-	public void add(UserDto dto) {
-		User user = new User();
-		
-		user.setEmail(dto.getEmail());
-		user.setFullname(dto.getFullname());
-		user.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt(12)));
-		user.setAvatar(dto.getAvatar());
-		user.setRoleId(dto.getRoleId());
-		
-		userRepository.save(user);
+	@Override
+	public UserDto findByID(int id) {
+		User user = userRepository.findById(id).get();
+		UserDto userDto = new UserDto(user.getId(), user.getEmail(), user.getFullname(), user.getAvatar(), 
+				user.getPhone(), user.getAddress(), user.getRole_id());
+		return userDto;
 	}
 	
-	public UserDto findById(int id) {
-		User user = userRepository.findById(id).get();
-		
-		return new UserDto(user.getId(), user.getFullname(), user.getEmail(), user.getPassword(), user.getAvatar(),user.getRole().getDescription() ) ;
+	@Override
+	public boolean findByEmail(UserDto userDto) {
+		User user = userRepository.findByEmail(userDto.getEmail());
+		if (user != null) {
+			return true;
+		}
+		return false;
 	}
 
-	public void update(UserDto dto) {
-		User user = userRepository.findById(dto.getId()).get();
-		user.setEmail(dto.getEmail());
-		user.setFullname(dto.getFullname());
-		user.setPassword(dto.getPassword());
-		user.setAvatar(dto.getAvatar());
-		user.setRoleId(dto.getRoleId());
-		
+	@Override
+	public int add(UserDto userDto) {
+		if (userDto.getPassword().compareTo(userDto.getConfirmPassword()) == -1) {
+			return -1;
+		}
+		String password = BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt(12));
+		User user = new User(userDto.getId(), userDto.getEmail(), userDto.getFullname(), password, userDto.getAvatar(), userDto.getPhone(),
+				userDto.getAddress(), userDto.getRole_id());
 		userRepository.save(user);
+		return 1;
 	}
 
+	@Override
+	public int update(UserDto userDto) {
+		User user = userRepository.findById(userDto.getId()).get();
+		if (userDto.getPassword() != null) {
+			String password = BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt(12));
+			user.setPassword(password);
+		}
+		user.setEmail(userDto.getEmail());
+		user.setFullname(userDto.getFullname());
+		user.setAvatar(userDto.getAvatar());
+		user.setPhone(userDto.getPhone());
+		user.setAddress(userDto.getAddress());
+		user.setRole_id(userDto.getRole_id());
+		userRepository.save(user); 
+		return 1;
+	}
+	
+	
+	@Override
 	public void delete(int id) {
 		userRepository.deleteById(id);
-
 	}
-	
 
+	@Override
+	public boolean resgiter(UserDto userDto) {
+			User user = new User();
+			user.setEmail(userDto.getEmail());
+			user.setFullname(userDto.getFullname());
+			user.setRole_id(userDto.getRole_id());
+			userRepository.save(user);
+			return true;
+	}
+
+	
 
 }

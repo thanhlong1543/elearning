@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="/admin/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Thêm mới tài khoản</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="col-md-12 mb-2">
+             <div class="page-header-breadcrumb">
+                 <ul class="breadcrumb-title">
+                     <li class="breadcrumb-item"><a href="/admin"> <i
+                                 class="feather icon-home"></i> Trang chủ
+                         </a></li>
+                     <li class="breadcrumb-item"><a href="#!">Thêm mới tài khoản</a></li>
+                 </ul>
+             </div>
+         </div>
+         <div class="col-sm-12">
+             <div class="card">
+                 <div class="card-header">
+                     <h2 class="text-uppercase text-center">Thêm mới tài khoản</h2>
+                 </div>
+                 <div class="card-block"> 
+                     <form th:object="${userDto}" th:action="@{${T(com.myclass.util.UrlConstants.Admin).USER_ADD}}" method="post"
+                     enctype="multipart/form-data">
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                     <label>Họ & tên</label>
+                                     <input type="text" th:field="*{fullname}" path="fullname" class="form-control" />
+                                     <span class="text-danger" th:if=" ${#fields.hasErrors('fullname')} " th:errors="*{fullname}" ></span>
+                                 </div>
+                                 <div class="form-group">
+                                     <label>Email</label>
+                                     <input type="text" th:field="*{email}" path="email" class="form-control" />
+                                     <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                 </div>
+                                 <div class="form-group">
+                                     <label>Mật khẩu</label>
+                                     <input type="password" th:field="*{password}" path="password" class="form-control" />
+                                     <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                                 </div>
+                                 <div class="form-group">
+                                     <label>Nhập lại mật khẩu</label>
+                                     <input type="password" th:field="*{confirmPassword}" path="confirm" class="form-control" />
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                     <label>Điện thoại</label>
+                                     <input type="text" th:field="*{phone}" path="phone" class="form-control" />
+                                     <span class="text-danger" th:if=" ${#fields.hasErrors('phone')} " th:errors="*{phone}" ></span>
+                                 </div>
+                                 <div class="form-group">
+                                     <label>Địa chỉ</label>
+                                     <input type="text" th:field="*{address}" path="address" class="form-control" />
+                                     <span class="text-danger" th:if=" ${#fields.hasErrors('address')} " th:errors="*{address}" ></span>
+                                 </div>
+                                 <div class="form-group">
+                                     <label>Avatar</label>
+                                     <input type="file" th:field="*{file}" path="avatar" class="form-control" id="avatar" multiple="multiple" />
+                                 </div>
+                                 <div class="form-group">
+                                     <label>Loại người dùng</label>
+                                     <select th:field="*{role_id}" name="" id="" class="form-control">
+                                         <option th:each="role : ${roleDto}" th:value="${role.id}" th:text="${role.name}"></option>
+                                     </select>
+                                     <span class="text-danger" th:if=" ${#fields.hasErrors('role_id')} " th:errors="*{role_id}" ></span>
+                                 </div>
+                             </div>
+                             <div class="col-12 mt-3">
+                                 <div class="form-group">
+                                 	 <span class="text-danger" th:text="${message}" ></span></br>
+                                     <button type="submit" class="btn btn-primary m-b-0">Lưu lại</button>
+                                     <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).USER}}" class="btn btn-secondary text-white">Quay lại</a>
+                                 </div>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+	</div>
+</body>
+</html>

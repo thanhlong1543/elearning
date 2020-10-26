@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/client/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="content">
+   	<section class="course-banner">
+        <div class="container">
+            <div class="banner-content">
+            	<h1>Kết quả tìm kiếm</h1>
+            </div>
+        </div>
+    </section>
+    <section class="mt-4">
+        <div class="container">
+           <div class="row" id="showCourse" onloadstart="a()">
+               <div class="col-md-2" v-for="courses, index) in courses">
+                 <div class="course">
+                     <img  />
+                     <h6 class="course-title" >{{ courses.title }} {{index}}</h6>
+                     <small class="course-content" >
+                     </small>
+                     <div class="course-price">
+                         <span ></span>
+                     </div>
+                     <div class="course-overlay">
+                         <a>
+                             <h6 class="course-title" >
+                             </h6>
+                             <div class="course-author">
+                                 <b>Lê Quang Song</b>
+                                 <span class="mx-1"> | </span>
+                                 <b></b>
+                             </div>
+                             <div class="course-info">
+                                 <span><i class="fa fa-play-circle"></i> lectures</span>
+                                 <span class="mx-1"> | </span>
+                                 <span><i class="fa fa-clock-o"></i> hours</span>
+                             </div>
+                             <small class="course-content" >
+                             </small>
+                         </a>
+                         <a href="#" class="btn btn-sm btn-danger text-white w-100">Add to cart</a>
+                     </div>
+                 </div>
+             </div>
+           </div>
+        </div>
+    </section>        
+ </div>
+</body>
+</html>

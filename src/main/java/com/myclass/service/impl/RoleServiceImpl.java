@@ -16,54 +16,44 @@ import com.myclass.service.RoleService;
 @Service
 @Transactional(rollbackOn = Exception.class)
 public class RoleServiceImpl implements RoleService {
-
+	
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Override
 	public List<RoleDto> findAll() {
-		List<RoleDto> dtos = new ArrayList<RoleDto>();
-
-		List<Role> roles = roleRepository.findAll();
-		for (Role role : roles) {
-			dtos.add(new RoleDto(role.getId(), role.getName(), role.getDescription()));
+		List<RoleDto> listRoleDto = new ArrayList<RoleDto>();
+		List<Role> listRole = roleRepository.findAll();
+		for (Role role : listRole) {
+			listRoleDto.add(new RoleDto(role.getId(), role.getName(), role.getDescription()));
 		}
-
-		return dtos;
-
+		return listRoleDto;
 	}
 
-	public RoleDto findById(int id) {
+	@Override
+	public RoleDto findByID(int id) {
 		Role role = roleRepository.findById(id).get();
-		return new RoleDto(role.getId(), role.getName(), role.getDescription());
+		RoleDto roleDto = new RoleDto(role.getId(), role.getName(), role.getDescription());
+		return roleDto;
 	}
 
-	public void add(RoleDto dto) {
-		Role role = new Role(dto.getId(), dto.getName(), dto.getDescription());
+	@Override
+	public void add(RoleDto roleDto) {
+		Role role = new Role(roleDto.getId(), roleDto.getName(), roleDto.getDescription());
+		roleRepository.save(role);		
+	}
+
+	@Override
+	public void update(RoleDto roleDto) {
+		Role role = roleRepository.findById(roleDto.getId()).get();
+		role.setName(roleDto.getName());
+		role.setDescription(roleDto.getDescription());
 		roleRepository.save(role);
 	}
 
-	public void update(RoleDto dto) {
-		Role role = roleRepository.findById(dto.getId()).get();
-		role.setName(dto.getName());
-		role.setDescription(dto.getDescription());
-		roleRepository.save(role);
-	}
-
+	@Override
 	public void delete(int id) {
 		roleRepository.deleteById(id);
-
 	}
-
-	public List<RoleDto> search(String keyword) {
-
-		List<RoleDto> dtos = new ArrayList<RoleDto>();
-
-		List<Role> roles = roleRepository.search(keyword);
-
-		for (Role role : roles) {
-			dtos.add(new RoleDto(role.getId(), role.getName(), role.getDescription()));
-		}
-		return dtos;
-	}
-
+	
 }

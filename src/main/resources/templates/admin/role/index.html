@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="/admin/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Danh Sách Quyền</title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+		<div class="col-md-12 mb-2">
+           <div class="page-header-breadcrumb">
+               <ul class="breadcrumb-title">
+                   <li class="breadcrumb-item"><a th:href="@{${T(com.myclass.util.UrlConstants.Admin).HOME}}"> <i class="feather icon-home"></i> Trang chủ
+                       </a></li>
+                   <li class="breadcrumb-item"><a href="">Danh sách quyền</a></li>
+               </ul>
+           </div>
+       	</div>
+       	<div class="col-sm-12">
+           <div class="card px-3">
+               <div class="card-header px-0 pb-2">
+                   <h2 class="text-uppercase text-center">Danh sách quyền</h2>
+                   <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).ROLE_ADD}}" class="btn btn-sm btn-primary">Thêm mới</a>
+               </div>
+               <div class="card-block table-border-style">
+                   <div class="table-responsive">
+                       <table class="table table-bordered">
+                           <thead>
+                               <tr>
+                                   <th class="text-center">STT</th>
+                                   <th class="text-center">Tên Quyền</th>
+                                   <th class="text-center">Mô Tả</th>
+                                   <th class="text-center">Hành Động</th>
+                               </tr>
+                           </thead>
+                           <tbody id="tbodyRole">
+                               <tr th:each="roles, iter : ${listRoleDto}">
+                                   <th class="text-center" th:text="${iter.count}"></th>
+                                   <td class="text-center" th:text="${roles.name}"></td>
+                                   <td class="text-center" th:text="${roles.description}"></td>
+                                   <td class="text-center"><a th:href="@{${(T(com.myclass.util.UrlConstants.Admin).ROLE_EDIT)}(id=${roles.id})}"
+                                           class="btn btn-sm btn-info btn-round py-1 font-weight-bold">Sửa</a>
+                                       <a th:href="@{${(T(com.myclass.util.UrlConstants.Admin).ROLE_DELETE)}(id=${roles.id})}"
+                                           class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">Xóa</a>
+                                   </td>
+                           </tbody>
+                       </table>
+                   </div>
+               </div>
+           </div>
+       	</div>
+	</div>
+
+</body>
+</html>

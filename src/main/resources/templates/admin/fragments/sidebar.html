@@ -1,0 +1,51 @@
+
+<nav class="pcoded-navbar" 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <div class="pcoded-inner-navbar main-menu">
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="">
+                <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).HOME}}">
+                    <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                    <span class="pcoded-mtext">Dashboard</span>
+                </a>
+            </li>
+            <li class="" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).CATEGORY}}">
+                    <span class="pcoded-micon"><i class="feather icon-layers"></i></span>
+                    <span class="pcoded-mtext">Danh mục</span>
+                </a>
+            </li>
+            <li class="" >
+                <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).COURSE}}">
+                    <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
+                    <span class="pcoded-mtext">Khóa học</span>
+                </a>
+            </li>
+            <li class="">
+                <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).VIDEO}}">
+                    <span class="pcoded-micon"><i class="feather icon-video"></i></span>
+                    <span class="pcoded-mtext">Video</span>
+                </a>
+            </li>
+            <li class="">
+                <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).TARGET}}">
+                    <span class="pcoded-micon"><i class="feather icon-crosshair"></i></span>
+                    <span class="pcoded-mtext">Mục tiêu</span>
+                </a>
+            </li>
+            <li class="">
+                <a th:href= "@{${T(com.myclass.util.UrlConstants.Admin).USER}}">
+                    <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                    <span class="pcoded-mtext">Tài khoản</span>
+                </a>
+            </li>
+            <li class="" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).ROLE}}">
+                    <span class="pcoded-micon"><i class="feather icon-user-check"></i></span>
+                    <span class="pcoded-mtext">Quyền</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

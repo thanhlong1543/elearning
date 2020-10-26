@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="/admin/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="col-md-12 mb-2">
+	         <div class="page-header-breadcrumb">
+	             <ul class="breadcrumb-title">
+	                 <li class="breadcrumb-item"><a th:href="@{${T(com.myclass.util.UrlConstants.Admin).HOME}}"> <i class="feather icon-home"></i> Trang chủ</a></li>
+	                 <li class="breadcrumb-item"><a href="#">Danh sách khóa học</a></li>
+	             </ul>
+	         </div>
+	     </div>
+	     <div class="col-sm-12">
+	         <div class="card px-3">
+	             <div class="card-header px-0 pb-2">
+	                 <h2 class="text-uppercase text-center">Danh sách khóa học</h2>
+	                 <div class="row justify-content-between">
+	                 	<div class="col-sm-4">
+	                 		 <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).COURSE_ADD}}" class="btn btn-sm btn-primary">Thêm
+	                     mới</a>
+	                 	</div>
+	                 	<div class="col-sm-3">
+	                 		<div class="input-group mb-3">
+	                 		<input class="form-control form-control-sm" type="text" placeholder="Search.." id="titleCourse"  required>
+						      <button class="btn btn-sm" onclick="SearchCourse()" type="submit"><i class="fa fa-search"></i></button>
+	                 		</div>
+						      
+						    
+	                 	</div>
+	                 </div>
+	                 
+	             </div>
+	             <div class="card-block table-border-style">
+	                 <div class="table-responsive">
+	                     <table class="table table-bordered">
+	                         <thead>
+	                             <tr class="">
+	                                 <th class="text-center " >STT</th>
+	                                 <th class="text-center w-25">Tiêu Đề</th>
+	                                 <th class="text-center w-25">Hình Đại Diện</th>
+	                                 <th class="text-center ">Số Bài Học</th>
+	                                 <th class="text-center">Giá Bán</th>
+	                                 <th class="text-center">Hành Động</th>
+	                             </tr>
+	                         </thead>
+	                         <tbody id = "showCourse">
+	                             <tr th:each="course, iter : ${courseDto}">
+	                                 <th th:text="${iter.count}" class="text-center"></th>
+	                                 <td th:text="${course.title}" class="text-center"></td>
+	                                 <td><img th:src="'/adminStyle/images/course/'+ ${course.image}" class="border card-img-top rounded mx-auto d-block" /></td>
+	                                 <td th:text="${course.leturesCount}" class="text-center"></td>
+	                                 <td class="text-center font-weight-bold" th:text="${#numbers.formatInteger(course.price, 3,'POINT')} + '.000 đ'"></td>
+	                                 <td class="text-center">
+	                                     <a th:href="@{${(T(com.myclass.util.UrlConstants.Admin).COURSE_EDIT)}(id=${course.id})}" class="btn btn-sm btn-info btn-round py-1 font-weight-bold">Sửa</a>
+	                                     <a th:href="@{${(T(com.myclass.util.UrlConstants.Admin).COURSE_DELETE)}(id=${course.id})}" class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">Xóa</a>
+	                                 </td>
+	                             </tr>
+	                             
+	                         </tbody>
+	                     </table>
+	                 </div>
+	             </div>
+	         </div>
+	     </div>
+	</div>
+
+</body>
+</html>

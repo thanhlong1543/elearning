@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/admin/layout/default">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Video</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="col-md-12 mb-2">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/admin">
+                            <i class="feather icon-home"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Sửa video</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-uppercase text-center">Sửa video</h2>
+                </div>
+                <div class="card-block">
+                    <form th:object="${videoDto}" th:action="@{${T(com.myclass.util.UrlConstants.Admin).VIDEO_ADD}}" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" th:field="*{id}" />
+                                <div class="form-group">
+                                    <label>Tiêu đề</label>
+                                    <input th:field="*{title}" type="text" name="title" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Url</label>
+                                    <input th:field="*{url}" type="text" name="url" class="form-control" />
+                                </div>
+                                <!--
+                                <div class="form-group">
+                                    <label>Hình đại diện</label>
+                                    <input th:field="*{}" type="text" name="image" class="form-control" />
+                                </div>
+                                -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Thời lượng (phút)</label>
+                                    <input th:field="*{timeCount}" type="number" name="timeCount" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Khóa học</label>
+                                    <select th:field="*{courseId}" name="" id="" class="form-control">
+                                        <option th:each="course : ${courseDto}" th:value="${course.id}" th:text="${course.title}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mt-3">
+                                    <button type="submit" class="btn btn-primary m-b-0">Lưu lại</button>
+                                    <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).VIDEO}}" class="btn btn-secondary text-white">Quay lại</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

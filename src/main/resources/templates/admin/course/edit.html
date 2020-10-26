@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="/admin/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Sửa khóa học</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="col-md-12 mb-2">
+	         <div class="page-header-breadcrumb">
+	             <ul class="breadcrumb-title">
+	                 <li class="breadcrumb-item">
+	                     <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).HOME}}"> <i class="feather icon-home"></i> Trang chủ</a>
+	                 </li>
+	                 <li class="breadcrumb-item"><a href="#!">Sửa khóa học</a></li>
+	             </ul>
+	         </div>
+	     </div>
+	     <div class="col-sm-12">
+	         <div class="card">
+	             <div class="card-header">
+	                 <h2 class="text-uppercase text-center">Sửa khóa học</h2>
+	             </div>
+	             <div class="card-block">
+	                 <form th:object="${courseDto}" th:action="@{${T(com.myclass.util.UrlConstants.Admin).COURSE_EDIT}}" method="post"
+	                 enctype="multipart/form-data">
+	                     <div class="row">
+	                         <div class="col-md-6">
+	                         	<input th:field="*{id}" type="hidden" name="title" class="form-control" />
+	                             <div class="form-group">
+	                                 <label>Tiêu đề</label>
+	                                 <input th:field="*{title}" type="text" name="title" class="form-control" />
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Số bài học</label>
+	                                 <input th:field="*{leturesCount}" type="number" name="leturesCount" class="form-control" />
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Số giờ học</label>
+	                                 <input th:field="*{hourCount}" type="number" name="hourCount" class="form-control" />
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Danh mục</label>
+	                                 <select th:field="*{categoryId}" name="categoryId" class="form-control">
+	                                     <option th:each="category : ${categoryDto}" th:value="${category.id}" th:text="${category.title}"></option>
+	                                 </select>
+	                             </div>
+	                         </div>
+	                         <div class="col-md-6">
+	                             <div class="form-group">
+	                                 <label>Giá bán</label>
+	                                 <input th:field="*{price}" type="text" name="price" class="form-control" />
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Giảm giá (%)</label>
+	                                 <input th:field="*{discount}" type="number" name="discount" class="form-control" />
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Mô tả</label>
+	                                 <input th:field="*{description}" type="text" name="description" class="form-control" />
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Hình đại diện</label>
+	                                 <input type="file" th:field="*{fileImage}"  name="image" class="form-control" multiple="multiple" />
+	                                 <input type="hidden" th:field="*{image}">
+	                             </div>
+	                         </div>
+	                         <div class="col-12">
+	                             <label>Nội dung</label>
+	                             <textarea th:field="*{content}" name="content" class="form-control" rows="5"></textarea>
+	                         </div>
+	                         <div class="col-12 mt-3">
+	                             <div class="form-group">
+	                             <span class="text-danger" th:text="${message}"></span></br>
+	                                 <button type="submit" class="btn btn-primary m-b-0">Lưu lại</button>
+	                                 <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).COURSE}}" class="btn btn-secondary text-white">Quay lại</a>
+	                             </div>
+	                         </div>
+	                     </div>
+	                 </form>
+	             </div>
+	         </div>
+	     </div>
+	</div>
+	
+
+</body>
+</html>

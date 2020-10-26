@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="/admin/layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="col-md-12 mb-2">
+	         <div class="page-header-breadcrumb">
+	             <ul class="breadcrumb-title">
+	                 <li class="breadcrumb-item">
+	                     <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).HOME}}"> <i class="feather icon-home"></i> Trang chủ</a>
+	                 </li>
+	                 <li class="breadcrumb-item"><a href="#!">Thêm mới khóa học</a></li>
+	             </ul>
+	         </div>
+	     </div>
+	     <div class="col-sm-12">
+	         <div class="card">
+	             <div class="card-header">
+	                 <h2 class="text-uppercase text-center">Thêm mới khóa học</h2>
+	             </div>
+	             <div class="card-block">
+	                 <form th:object="${courseDto}" th:action="@{${T(com.myclass.util.UrlConstants.Admin).COURSE_ADD}}" method="post"
+	                 enctype="multipart/form-data">
+	                     <div class="row">
+	                         <div class="col-md-6">
+	                             <div class="form-group">
+	                                 <label>Tiêu đề</label>
+	                                 <input th:field="*{title}" type="text" name="title" class="form-control" />
+									 <span class="text-danger" th:if=" ${#fields.hasErrors('title')} " th:errors="*{title}" ></span>
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Số bài học</label>
+	                                 <input th:field="*{leturesCount}" type="number" name="leturesCount" class="form-control" />
+									 <span class="text-danger" th:if=" ${#fields.hasErrors('leturesCount')} " th:errors="*{leturesCount}" ></span>
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Số giờ học</label>
+	                                 <input th:field="*{hourCount}" type="number" name="hourCount" class="form-control" />
+									 <span class="text-danger" th:if=" ${#fields.hasErrors('hourCount')} " th:errors="*{hourCount}" ></span>
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Danh mục</label>
+	                                 <select th:field="*{categoryId}" name="categoryId" class="form-control">
+	                                     <option th:each="category : ${categoryDto}" th:value="${category.id}" th:text="${category.title}"></option>
+	                                 </select>
+	                             </div>
+	                         </div>
+	                         <div class="col-md-6">
+	                             <div class="form-group">
+	                                 <label>Giá bán</label>
+	                                 <input th:field="*{price}" type="text" name="price" class="form-control" />
+									 <span class="text-danger" th:if=" ${#fields.hasErrors('price')} " th:errors="*{price}" ></span>
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Giảm giá (%)</label>
+	                                 <input th:field="*{discount}" type="number" name="discount" class="form-control" />
+									 <span class="text-danger" th:if=" ${#fields.hasErrors('discount')} " th:errors="*{discount}" ></span>
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Mô tả</label>
+	                                 <input th:field="*{description}" type="text" name="description" class="form-control" />
+									 <span class="text-danger" th:if=" ${#fields.hasErrors('description')} " th:errors="*{description}" ></span>
+	                             </div>
+	                             <div class="form-group">
+	                                 <label>Hình đại diện</label>
+	                                 <input type="file" th:field="*{fileImage}"  name="image" class="form-control" multiple="multiple" />
+	                             </div>
+	                         </div>
+	                         <div class="col-12">
+	                             <label>Nội dung</label>
+	                             <textarea th:field="*{content}" name="content" class="form-control" rows="5"></textarea>
+								 <span class="text-danger" th:if=" ${#fields.hasErrors('content')} " th:errors="*{content}" ></span>
+	                         </div>
+	                         <div class="col-12 mt-3">
+	                             <div class="form-group">
+									 <span class="text-danger" th:text="${message}"></span></br>
+	                                 <button type="submit" class="btn btn-primary m-b-0">Lưu lại</button>
+	                                 <a th:href="@{${T(com.myclass.util.UrlConstants.Admin).COURSE}}" class="btn btn-secondary text-white">Quay lại</a>
+	                             </div>
+	                         </div>
+	                     </div>
+	                 </form>
+	             </div>
+	         </div>
+	     </div>
+	</div>
+	
+
+</body>
+</html>

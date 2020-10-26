@@ -6,9 +6,8 @@ import com.myclass.dto.RoleDto;
 
 public interface RoleService {
 	List<RoleDto> findAll();
-	RoleDto findById(int id);
-	void add(RoleDto dto);
-	void update(RoleDto dto);
+	RoleDto findByID(int id);
+	void add(RoleDto roleDto);
+	void update(RoleDto roleDto);
 	void delete(int id);
-	public List<RoleDto> search(String keyword);
 }
